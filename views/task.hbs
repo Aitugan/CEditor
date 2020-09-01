@@ -1,26 +1,26 @@
 <div>
     <div class="row">
         <div class="col-md-8">
-            <textarea name="" id="code-screen">{{content}}</textarea>
+            <div class="select-boxes">
+                <select onchange="selectLang(this)" class="select-menu" id="inputGroupSelect01">
+                    <option>Golang</option>
+                    <option>Javascript</option>
+                    <option>Css</option>
+                </select>
+                <select onchange="selectTheme(this)" class="select-menu" id="inputGroupSelect02">
+                    <option>Dracula</option>
+                    <option>Cobalt</option>
+                    <option>Bespin</option>
+                    <option>Eclipse</option>
+                    <option>Idea</option>
+                </select>
+            </div>
+
+            <textarea id="code-screen">{{content}} </textarea>
         </div>
         <div class="col-md-4" id="chatbox">
             <div class="panel panel-primary">
 
-                <div id="video-container">
-                    <video autoplay id="second-video"></video>
-                    <video autoplay id="my-video" muted="true"></video>
-                    <div id="step2">
-                        <p>Your ID: <span id="my-id">...</span></p>
-                        <div class="form-inline">
-                            <input type="text" class="form-control" placeholder="Call User ID..." id="callto-id">
-                            <a href="" class="btn btn-sm btn-success" id="make-call">Call</a>
-                        </div>
-                    </div>
-                    <div class="step3">
-                        <p>Talk to <span id="second-id">...</span>
-                            <a href="" class="btn btn-sm btn-danger">End Call</a></p>
-                    </div>
-                </div>
 
                 <div class="panel-heading">
                     CHAT ROOM
@@ -56,7 +56,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/mode/javascript/javascript.min.js"></script>
 <script src="/plugins/ot/ot.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+{{!-- <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/go/go.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/addon/hint/anyword-hint.min.js"
+    integrity="sha512-wdYOcbX/zcS4tP3HEDTkdOI5UybyuRxJMQzDQIRcafRLY/oTDWyXO+P8SzuajQipcJXkb2vHcd1QetccSFAaVw=="
+    crossorigin="anonymous"></script>
 <script>
     var EditorClient = ot.EditorClient
     var SocketIOAdapter = ot.SocketIOAdapter
@@ -65,8 +76,43 @@
     var socket = io.connect("http://localhost:3000")
     var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
         lineNumbers: true,
-        theme: "oceanic-next"
+        theme: "dracula",//document.getElementById(themes).value
+        mode: "text/x-go",
+        viewportMargin: Infinity,
+        indentUnit: 4,
+        indentSize: 4,
+        indentWithTabs: true,
+        tabSize: 4,
+        lineWiseCopyCut: true,
+        gutters: ["CodeMirror-lint-markers"],
+        styleActiveLine: true,
+        lint: true,
     })
+
+
+    function selectLang(lang) {
+        var optionText = lang.options[lang.selectedIndex].innerText;
+        var modes = {
+            'Golang': 'text/x-go',
+            'Javascript': 'text/javascript',
+            'CSS': 'text/css',
+
+        };
+
+        editor.setOption('mode', modes[optionText]);
+    }
+
+    function selectTheme(theme) {
+        var optionText = theme.options[theme.selectedIndex].innerText;
+        var themes = {
+            'Dracula': 'dracula', 'Cobalt': 'cobalt', 'Bespin': 'bespin', 'Eclipse': 'eclipse',
+            'Idea': 'idea'
+        };
+
+        editor.setOption('theme', themes[optionText]);
+    }
+
+
     var code = $("#code-screen").val()
     var cmClient;
     function init(str, revision, clients, serverAdapter) {
