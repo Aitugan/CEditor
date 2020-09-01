@@ -73,7 +73,7 @@
     var SocketIOAdapter = ot.SocketIOAdapter
     var CodeMirrorAdapter = ot.CodeMirrorAdapter
 
-    var socket = io.connect("http://localhost:3000")
+    var socket = io.connect("code-editor-for-lots.herokuapp.com")
     var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
         lineNumbers: true,
         theme: "dracula",//document.getElementById(themes).value
