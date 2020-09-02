@@ -7,18 +7,22 @@ var transporter = nodemailer.createTransport(config.mailer);
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Code4Share - a platform for sharing code." });
+  res.render("index", {
+    title: "CEditor - code editor for working on code with teammate.",
+  });
 });
 
 router.get("/about", function (req, res, next) {
-  res.render("about", { title: "Code4Share - a platform for sharing code." });
+  res.render("about", {
+    title: "CEditor - code editor for working on code with teammate.",
+  });
 });
 
 router
   .route("/contact")
   .get(function (req, res, next) {
     res.render("contact", {
-      title: "Code4Share - a platform for sharing code.",
+      title: "CEditor - code editor for working on code with teammate.",
     });
   })
   .post(function (req, res, next) {
@@ -29,7 +33,7 @@ router
 
     if (errors) {
       res.render("contact", {
-        title: "Code4Share - a platform for sharing code.",
+        title: "CEditor - code editor for working on code with teammate.",
         name: req.body.name,
         email: req.body.email,
         message: req.body.message,
@@ -50,7 +54,7 @@ router
       });
 
       res.render("thank", {
-        title: "Code4Share - a platform for sharing code.",
+        title: "CEditor - code editor for working on code with teammate.",
       });
     }
   });
