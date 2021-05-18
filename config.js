@@ -4,11 +4,11 @@ module.exports = {
   mailer: {
     service: "Gmail",
     auth: {
-      user: "mirash2001@gmail.com",
-      pass: "EducationIsGood",
+      user: "user@mail.com",
+      pass: "Password",
     },
   },
   dbConnstring:
-    "mongodb+srv://admin:EducationProgramming7!@cluster0.ogclc.mongodb.net/CEditorDB?retryWrites=true&w=majority",
+    "mongodb-URI",
   sessionKey: "Hello everybody!",
 };
